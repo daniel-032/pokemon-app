@@ -23,7 +23,7 @@ export class Pokemon {
 
   @ManyToOne(() => Trainer, (trainer) => trainer.pokemons, { nullable: true })
   @JoinColumn({name: 'trainer_id'})
-  trainer: Trainer;
+  trainer: Trainer | null;
 
   @Column('smallint', { default: 0 })
   attack: number;
