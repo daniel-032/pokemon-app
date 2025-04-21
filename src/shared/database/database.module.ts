@@ -1,10 +1,10 @@
 import { Module, OnModuleInit } from '@nestjs/common';
-import { AppDataSource } from './data-source.config';
+import { AppDataSourceOptions } from './data-source.config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
-@Module({})
-export class DatabaseModule implements OnModuleInit {
-  async onModuleInit() {
-    await AppDataSource.initialize();
-    console.log('DataSource has been initialized!');
-  }
-}
+@Module({
+  imports: [
+    TypeOrmModule.forRoot(AppDataSourceOptions)
+  ]
+})
+export class DatabaseModule {}
