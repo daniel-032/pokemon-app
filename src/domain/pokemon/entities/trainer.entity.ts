@@ -28,6 +28,6 @@ export class Trainer {
   @Column('smallint', { default: 0 })
   badges: number;
 
-  @OneToMany(() => Pokemon, (pokemon) => pokemon.type, { nullable: true })
+  @OneToMany(() => Pokemon, (pokemon) => pokemon.trainer, { nullable: true })
   pokemons: Pokemon[];
 }
