@@ -1,11 +1,11 @@
-import { DataSource } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 const pathEntities = __dirname + './../../domain/**/**/*.entity{.js,.ts}';
 const pathMigrations = __dirname + '/../migrations/*{.ts,.js}';
 
-export const AppDataSource = new DataSource({
+export const AppDataSourceOptions: DataSourceOptions = {
   type: 'postgres',
   host: process.env.DB_HOST,
   port: process.env.DB_PORT ? +process.env.DB_PORT : 5432,
@@ -16,4 +16,6 @@ export const AppDataSource = new DataSource({
   migrations: [pathMigrations],
   synchronize: false,
   logging: true,
-});
+};
+
+export const AppDataSource = new DataSource(AppDataSourceOptions);
