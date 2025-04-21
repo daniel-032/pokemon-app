@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './shared/database/database.module';
 import { TypeModule } from './domain/type/type.module';
+import { PokemonModule } from './domain/pokemon/pokemon.module';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { TypeModule } from './domain/type/type.module';
       envFilePath: '.env'
     }),
     DatabaseModule,
-    TypeModule
+    TypeModule,
+    PokemonModule
   ],
   controllers: [AppController],
   providers: [AppService],
