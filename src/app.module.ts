@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './shared/database/database.module';
 import { TypeModule } from './domain/type/type.module';
 import { PokemonModule } from './domain/pokemon/pokemon.module';
+import { TrainerModule } from './domain/trainer/trainer.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { PokemonModule } from './domain/pokemon/pokemon.module';
     }),
     DatabaseModule,
     TypeModule,
-    PokemonModule
+    PokemonModule,
+    TrainerModule
   ],
   controllers: [AppController],
   providers: [AppService],
