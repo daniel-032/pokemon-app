@@ -57,6 +57,17 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Migrations
+
+```bash
+# create a new migration
+$ npx typeorm-ts-node-commonjs migration:generate src/shared/migrations/PokemonEntities --dataSource ./src/shared/database/data-source.config.ts
+
+# run migrations
+$ npx typeorm-ts-node-commonjs migration:run --dataSource ./src/shared/database/data-source.config.ts
+
+```
+
 ## Deployment
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
