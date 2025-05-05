@@ -1,17 +1,24 @@
-import { Entity, Index, Column, PrimaryColumn, DeleteDateColumn } from 'typeorm';
+// session.entity.ts
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from 'typeorm';
+import { User } from './../../user/entities/user.entity';
 
-@Entity('sessions')
+@Entity()
 export class Session {
-  @PrimaryColumn('varchar', { length: 255 })
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Index()
-  @Column('bigint')
-  expiredAt: number;
+  @ManyToOne(() => User)
+  user: User;
 
-  @Column('text')
-  json: string;
+  @Column()
+  token: string;
 
-  @DeleteDateColumn()
-  destroyedAt?: Date;
+  @Column({ default: false })
+  revoked: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @Column({ nullable: true })
+  expiresAt: Date;
 }

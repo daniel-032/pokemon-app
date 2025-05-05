@@ -1,5 +1,5 @@
 // src/auth/auth.controller.ts
-import { Controller, Post, Req, Body, Get, Res, UseGuards } from '@nestjs/common';
+import { Controller, Post, Req, Body, Get, Res, UseGuards, Headers } from '@nestjs/common';
 import { AuthService } from './../services/auth.service';
 import { Request, Response } from 'express';
 import { SessionAuthGuard } from './../guards/session-auth.guard';
@@ -17,22 +17,19 @@ export class AuthController {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    req.session.userId = user.userId;
-    return res.json({ message: 'Login sucess' });
+    return res.json({ user, message: 'Login sucess' });
   }
 
   @UseGuards(SessionAuthGuard)
   @Get('profile')
   async profile(@Req() req: Request) {
-    const user = await this.authService.findUserById(req.session.userId as string);
+    const user = req.user;
     return user;
   }
 
   @Post('logout')
-  logout(@Req() req: Request, @Res() res: Response) {
-    req.session.destroy(() => {
-      res.clearCookie('connect.sid');
-      res.json({ message: 'Session close' });
-    });
+  logout(@Headers('authorization') authHeader: string) {
+    const token = authHeader?.split(' ')[1];
+    return this.authService.destroySession(token);
   }
 }
