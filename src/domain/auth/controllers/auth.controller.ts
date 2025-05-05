@@ -17,7 +17,7 @@ export class AuthController {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    return res.json({ user, message: 'Login sucess' });
+    return res.json({ user, message: 'Login success' });
   }
 
   @UseGuards(SessionAuthGuard)
@@ -25,11 +25,5 @@ export class AuthController {
   async profile(@Req() req: Request) {
     const user = req.user;
     return user;
-  }
-
-  @Post('logout')
-  logout(@Headers('authorization') authHeader: string) {
-    const token = authHeader?.split(' ')[1];
-    return this.authService.destroySession(token);
   }
 }
