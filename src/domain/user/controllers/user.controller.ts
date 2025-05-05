@@ -15,26 +15,34 @@ import { User } from '../entities/user.entity';
 import { SessionAuthGuard } from './../../auth/guards/session-auth.guard';
 
 @Controller('users')
-@UseGuards(SessionAuthGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Post('register')
+  register(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return this.userService.create(createUserDto);
+  }
+
   @Post()
+  @UseGuards(SessionAuthGuard)
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.userService.create(createUserDto);
   }
 
   @Get()
+  @UseGuards(SessionAuthGuard)
   findAll(): Promise<User[]> {
     return this.userService.findAll();
   }
 
   @Get(':id')
+  @UseGuards(SessionAuthGuard)
   findOne(@Param('id') id: string): Promise<User> {
     return this.userService.findOne(id);
   }
 
   @Put(':id')
+  @UseGuards(SessionAuthGuard)
   update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
@@ -43,6 +51,7 @@ export class UserController {
   }
 
   @Delete(':id')
+  @UseGuards(SessionAuthGuard)
   remove(@Param('id') id: string): Promise<void> {
     return this.userService.remove(id);
   }
