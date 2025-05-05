@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './../entities/user.entity';
+import { User } from '../../user/entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
@@ -8,11 +8,12 @@ import * as bcrypt from 'bcrypt';
 export class AuthService {
   constructor(
     @InjectRepository(User)
-    private userRepo: Repository<User>,
+    private userRepository: Repository<User>,
   ) {}
 
   async validateUser(email: string, password: string): Promise<User | null> {
-    const user = await this.userRepo.findOne({ where: { email } });
+    const user = await this.userRepository.findOne({ where: { email } });
+    console.log(email)
     if (!user) return null;
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -20,6 +21,6 @@ export class AuthService {
   }
 
   async findUserById(id: string): Promise<User | null> {
-    return this.userRepo.findOne({ where: { userId: id } });
+    return this.userRepository.findOne({ where: { userId: id } });
   }
 }

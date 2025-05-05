@@ -6,6 +6,8 @@ import { DatabaseModule } from './shared/database/database.module';
 import { TypeModule } from './domain/type/type.module';
 import { PokemonModule } from './domain/pokemon/pokemon.module';
 import { TrainerModule } from './domain/trainer/trainer.module';
+import { UserModule } from './domain/user/user.module';
+import { AuthModule } from './domain/auth/auth.module';
 
 @Module({
   imports: [
@@ -16,7 +18,9 @@ import { TrainerModule } from './domain/trainer/trainer.module';
     DatabaseModule,
     TypeModule,
     PokemonModule,
-    TrainerModule
+    TrainerModule,
+    UserModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -19,7 +19,7 @@ async function bootstrap() {
       secret: process.env.AUTH_SECRET_SESSION!,
       resave: false,
       saveUninitialized: false,
-      cookie: { maxAge: 30000, httpOnly: true },
+      cookie: { maxAge: 900000, httpOnly: true },
       store: new TypeormStore().connect(sessionRepository),
     }),
   );

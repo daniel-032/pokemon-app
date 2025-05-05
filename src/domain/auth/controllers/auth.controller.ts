@@ -14,11 +14,11 @@ export class AuthController {
     const user = await this.authService.validateUser(email, password);
 
     if (!user) {
-      return res.status(401).json({ message: 'Credenciales inválidas' });
+      return res.status(401).json({ message: 'Invalid credentials' });
     }
 
     req.session.userId = user.userId;
-    return res.json({ message: 'Login exitoso' });
+    return res.json({ message: 'Login sucess' });
   }
 
   @UseGuards(SessionAuthGuard)
@@ -32,7 +32,7 @@ export class AuthController {
   logout(@Req() req: Request, @Res() res: Response) {
     req.session.destroy(() => {
       res.clearCookie('connect.sid');
-      res.json({ message: 'Sesión cerrada' });
+      res.json({ message: 'Session close' });
     });
   }
 }
