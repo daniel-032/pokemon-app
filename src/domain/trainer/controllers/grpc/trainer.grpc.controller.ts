@@ -1,31 +1,31 @@
 import { Controller } from '@nestjs/common';
 import { GrpcMethod, RpcException } from '@nestjs/microservices';
-import { TrainerGprcService } from '../../services/gprc/trainer.gprc.service';
-import { TrainerGPRC } from '../../interfaces/trainer.gprc.interface';
+import { TrainerGrpcService } from '../../services/grpc/trainer.grpc.service';
+import { TrainerGPRC } from '../../interfaces/trainer.grpc.interface';
 import {
   validateInputCreate,
   validateInputUpdate,
 } from '../../helpers/validation.helper';
 
 @Controller('trainers')
-export class TrainerGprcController {
-  constructor(private readonly trainerGprcService: TrainerGprcService) {}
+export class TrainerGrpcController {
+  constructor(private readonly trainerGrpcService: TrainerGrpcService) {}
 
   @GrpcMethod('TrainerService', 'CreateTrainer')
   create(rawData: any) {
     const dto = validateInputCreate(rawData);
-    return this.trainerGprcService.create(dto);
+    return this.trainerGrpcService.create(dto);
   }
 
   @GrpcMethod('TrainerService', 'ListTrainers')
   async findAll() {
-    const trainers: TrainerGPRC[] = await this.trainerGprcService.findAll();
+    const trainers: TrainerGPRC[] = await this.trainerGrpcService.findAll();
     return { trainers };
   }
 
   @GrpcMethod('TrainerService', 'GetTrainer')
   findOne({ trainerId }: { trainerId: string }) {
-    return this.trainerGprcService.findById(trainerId);
+    return this.trainerGrpcService.findById(trainerId);
   }
 
   @GrpcMethod('TrainerService', 'UpdateTrainer')
@@ -33,13 +33,13 @@ export class TrainerGprcController {
     const dto = validateInputUpdate(rawData);
     const { trainerId } = rawData;
 
-    return this.trainerGprcService.update(trainerId, dto);
+    return this.trainerGrpcService.update(trainerId, dto);
   }
 
   @GrpcMethod('TrainerService', 'DeleteTrainer')
   async remove({ trainerId }: { trainerId: string }) {
     try {
-      await this.trainerGprcService.delete(trainerId);
+      await this.trainerGrpcService.delete(trainerId);
     } catch {
       return {
         success: false,

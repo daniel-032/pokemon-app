@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { join } from 'path';
 import * as dotenv from 'dotenv';
+import { ReflectionService } from '@grpc/reflection';
 
 dotenv.config();
 
@@ -15,7 +16,10 @@ async function bootstrap() {
     options: {
       package: 'trainerproto',
       protoPath: join(__dirname, './../proto/trainer.proto'),
-      url: `${process.env.GPRC_HOST}:${process.env.GPRC_PORT}`
+      url: `${process.env.GPRC_HOST}:${process.env.GPRC_PORT}`,
+      onLoadPackageDefinition(pkg, server) {
+          new ReflectionService(pkg).addToServer(server);
+      },
     },
   });
 

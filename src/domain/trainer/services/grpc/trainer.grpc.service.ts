@@ -2,11 +2,12 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { TrainerRepository } from '../../repositories/trainer.repository';
 import { CreateTrainerDto } from '../../dtos/create-trainer.dto';
 import { UpdateTrainerDto } from '../../dtos/update-trainer.dto';
-import { TrainerGPRC } from '../../interfaces/trainer.gprc.interface';
+import { TrainerGPRC } from '../../interfaces/trainer.grpc.interface';
 import { Trainer } from 'src/domain/pokemon/entities/trainer.entity';
+import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
-export class TrainerGprcService {
+export class TrainerGrpcService {
   constructor(private readonly trainerRepository: TrainerRepository) {}
 
   async create(dto: CreateTrainerDto) {
@@ -23,7 +24,7 @@ export class TrainerGprcService {
 
   async findById(trainerId: string) {
     const trainer = await this.trainerRepository.findById(trainerId);
-    if (!trainer) throw new NotFoundException('Trainer not found');
+    if (!trainer) throw new RpcException('Trainer not found');
     return this.sanitizeTrainerData(trainer);
   }
 
