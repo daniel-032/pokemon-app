@@ -1,0 +1,58 @@
+syntax="proto3";
+
+package trainerproto;
+
+
+service TrainerService {
+    rpc ListTrainers (Empty) returns (ListTrainersResponse);
+    rpc CreateTrainer (CreateTrainerRequest) returns (Trainer);
+    rpc GetTrainer(GetTrainerRequest) returns (Trainer);
+    rpc UpdateTrainer (UpdateTrainerRequest) returns (Trainer);
+    rpc DeleteTrainer (DeleteTrainerRequest) returns (DeleteTrainerResponse);
+}
+
+message Trainer {
+    string trainerId = 1;
+    string name = 2;
+    string secondName = 3;
+    int32 age = 4;
+    string region = 5;
+    int32 badges = 6;
+}
+
+message ListTrainersResponse {
+    repeated Trainer trainers = 1;
+}
+
+message CreateTrainerRequest {
+    string trainerId = 1;
+    string name = 2;
+    string secondName = 3;
+    int32 age = 4;
+    string region = 5;
+    int32 badges = 6;
+}
+
+message GetTrainerRequest {
+    string trainerId = 1;
+}
+
+message UpdateTrainerRequest {
+  string trainerId = 1;
+  string name = 2;
+  string secondName = 3;
+  int32 age = 4;
+  string region = 5;
+  int32 badges = 6;
+}
+
+message DeleteTrainerRequest {
+  string trainerId = 1;
+}
+
+message DeleteTrainerResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message Empty {}
