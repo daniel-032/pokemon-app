@@ -1,4 +1,8 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { Field, InputType, PartialType } from '@nestjs/graphql';
 import { CreateTrainerDto } from './create-trainer.dto';
 
-export class UpdateTrainerDto extends PartialType(CreateTrainerDto) {}
+@InputType()
+export class UpdateTrainerDto extends PartialType(CreateTrainerDto) {
+  @Field()
+  trainerId: string;
+}

@@ -1,0 +1,59 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type TypeModel {
+  typeId: ID!
+  name: String!
+  pokemons: [PokemonModel!]
+}
+
+type PokemonModel {
+  pokemonId: ID!
+  name: String!
+  level: Int!
+  type: TypeModel!
+  trainer: TrainerModel
+  attack: Int!
+  defense: Int!
+  speed: Int!
+  isLegendary: Boolean!
+}
+
+type TrainerModel {
+  trainerId: ID!
+  name: String!
+  secondName: String!
+  age: Int
+  region: String
+  badges: Int!
+  pokemons: [PokemonModel!]
+}
+
+type Query {
+  findAllTrainers: [TrainerModel!]!
+  findTrainerById(trainerId: String!): TrainerModel!
+}
+
+type Mutation {
+  createTrainer(input: CreateTrainerDto!): TrainerModel!
+  updateTrainer(trainerId: String!, input: UpdateTrainerDto!): TrainerModel!
+  deleteTrainer(trainerId: String!): Boolean!
+}
+
+input CreateTrainerDto {
+  name: String!
+  secondName: String!
+  age: Int!
+  region: String!
+  badges: Int!
+}
+
+input UpdateTrainerDto {
+  name: String
+  secondName: String
+  age: Int
+  region: String
+  badges: Int
+  trainerId: String!
+}
